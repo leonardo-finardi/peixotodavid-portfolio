@@ -1,0 +1,809 @@
+<!DOCTYPE HTML>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Peixoto David Arquitetura</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Peixoto David Arquitetura — Especialistas em As Built, Compatibilização de Projetos e Plantas de Contrato para construtoras e incorporadoras." />
+<meta name="keywords" content="arquitetura, as built, compatibilização de projetos, plantas de contrato, BIM, BimCollab, construtoras, incorporadoras, São Paulo" />
+<meta name="author" content="Peixoto David Arquitetura" />
+
+<meta property="og:title" content="Peixoto David Arquitetura"/>
+<meta property="og:description" content="Transformamos complexidade em clareza — projetos precisos, ágeis e confiáveis."/>
+<meta property="og:site_name" content="Peixoto David Arquitetura"/>
+
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+<link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700" rel="stylesheet">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/animate.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/icomoon.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/flexslider.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='fonts/flaticon/font/flaticon.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/owl.carousel.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/owl.theme.default.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<style>
+  /* ── Video Project Cards ── */
+  .video-project-card {
+    cursor: pointer;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    background: #fff;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.09);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .video-project-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 32px rgba(0,0,0,0.15);
+  }
+  .video-thumbnail {
+    position: relative;
+    overflow: hidden;
+    background: #111;
+  }
+  .video-thumbnail video {
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+  .video-play-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.52);
+    border-radius: 50%;
+    width: 62px;
+    height: 62px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+  }
+  .video-project-card:hover .video-play-overlay {
+    opacity: 0;
+  }
+  .video-play-overlay::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-left: 20px solid #fff;
+    margin-left: 5px;
+  }
+  .video-project-info {
+    padding: 18px 20px 16px;
+  }
+  .video-project-info h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 0 8px;
+    color: #333;
+  }
+  .video-project-info .video-desc {
+    font-size: 13px;
+    color: #777;
+    line-height: 1.65;
+    display: block;
+    margin-bottom: 10px;
+  }
+  .video-project-info .video-date {
+    font-size: 11px;
+    color: #aaa;
+    display: block;
+    text-align: right;
+  }
+
+  /* ── Video Modal (custom — sem dependência do Bootstrap modal plugin) ── */
+  #videoModal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0,0,0,0.84);
+    align-items: center;
+    justify-content: center;
+  }
+  #videoModal.vm-active {
+    display: flex;
+  }
+  .vm-box {
+    position: relative;
+    width: 90%;
+    max-width: 900px;
+    background: #111;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.7);
+    animation: vmFadeIn .2s ease;
+  }
+  @keyframes vmFadeIn {
+    from { opacity:0; transform:scale(.96); }
+    to   { opacity:1; transform:scale(1);  }
+  }
+  .vm-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 13px 18px;
+    background: #2c2c2c;
+  }
+  .vm-header h4 {
+    margin: 0;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .vm-close {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+    opacity: .75;
+    padding: 0 4px;
+  }
+  .vm-close:hover { opacity: 1; }
+  #modalVideo {
+    width: 100%;
+    max-height: 72vh;
+    display: block;
+    background: #000;
+  }
+
+  /* ── Serviços expanded (inside timeline) ── */
+  .service-detail-list {
+    padding-left: 18px;
+    margin-top: 8px;
+  }
+  .service-detail-list li {
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: #666;
+    line-height: 1.6;
+  }
+
+  /* ── Why-us boxes ── */
+  .why-box {
+    padding: 30px 24px;
+    border-left: 4px solid transparent;
+    background: #f9f9f9;
+    border-radius: 4px;
+    margin-bottom: 24px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .why-box:hover {
+    box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+  }
+  .why-box.color-1 { border-left-color: #F9BF3B; }
+  .why-box.color-2 { border-left-color: #E64C65; }
+  .why-box.color-3 { border-left-color: #1AB5D4; }
+  .why-box h4 {
+    font-size: 15px;
+    font-weight: 700;
+    margin: 0 0 10px;
+    color: #333;
+  }
+  .why-box p {
+    font-size: 13.5px;
+    color: #666;
+    line-height: 1.7;
+    margin: 0;
+  }
+</style>
+
+<script src="{{ url_for('static', filename='js/modernizr-2.6.2.min.js') }}"></script>
+<!--[if lt IE 9]>
+<script src="{{ url_for('static', filename='js/respond.min.js') }}"></script>
+<![endif]-->
+</head>
+
+<body>
+<div id="colorlib-page">
+  <div class="container-wrap">
+    <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"><i></i></a>
+
+    <aside id="colorlib-aside" role="complementary" class="border js-fullheight" style="overflow: hidden;">
+      <div class="text-center">
+        <div class="author-img" style="background-image: url({{ url_for('static', filename='images/about.png') }})"></div>
+        <h1 id="colorlib-logo"><a>Peixoto David</a></h1>
+        <span class="position"><a>Arquitetura</a></span>
+      </div>
+      <nav id="colorlib-main-menu" role="navigation" class="navbar">
+        <div id="navbar" class="collapse">
+          <ul>
+            <li><a href="#" data-nav-section="sobre">Sobre Nós</a></li>
+            <li><a href="#" data-nav-section="servicos">Serviços</a></li>
+            <li><a href="#" data-nav-section="processo">Como Trabalhamos</a></li>
+            <li><a href="#" data-nav-section="trabalhos">Trabalhos</a></li>
+            <li><a href="#" data-nav-section="contato">Contato</a></li>
+          </ul>
+        </div>
+      </nav>
+      <br><br><br><br><br>
+    </aside>
+
+    <div id="colorlib-main">
+
+      <!-- ═══════════════════════════════════════
+           SOBRE NÓS
+      ═══════════════════════════════════════ -->
+      <section class="colorlib-about" data-section="sobre">
+        <div class="colorlib-narrow-content">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row row-bottom-padded-sm animate-box" data-animate-effect="fadeInLeft">
+                <div class="col-md-12">
+                  <div class="about-desc">
+                    <span class="heading-meta">Sobre Nós</span>
+                    <h2 class="colorlib-heading">Quem Somos</h2>
+                    <p>A <strong>Peixoto David Arquitetura</strong> transforma complexidade em clareza. Somos um escritório especializado em projetos as built, compatibilização e plantas de contrato para construtoras e incorporadoras que buscam precisão, agilidade e confiança.</p>
+                    <p>Com uma equipe experiente e apaixonada por detalhes, traduzimos o que está na obra em projetos organizados, compreensíveis e tecnicamente impecáveis. Nosso trabalho vai além da documentação: buscamos otimizar processos, antecipar soluções e tornar cada etapa mais leve e eficiente.</p>
+                    <p>Utilizamos metodologias consolidadas, tecnologia de ponta e um rigoroso controle de qualidade — sempre com olhar atento às particularidades de cada cliente e empreendimento. Porque, para nós, cada projeto é mais do que técnica: é parceria, é estratégia, é construção inteligente.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3 animate-box" data-animate-effect="fadeInLeft">
+                  <div class="services color-1">
+                    <span class="icon2"><i class="icon-bulb"></i></span>
+                    <h3>Precisão</h3>
+                  </div>
+                </div>
+                <div class="col-md-3 animate-box" data-animate-effect="fadeInRight">
+                  <div class="services color-2">
+                    <span class="icon2"><i class="icon-clock3"></i></span>
+                    <h3>Agilidade</h3>
+                  </div>
+                </div>
+                <div class="col-md-3 animate-box" data-animate-effect="fadeInTop">
+                  <div class="services color-3">
+                    <span class="icon2"><i class="icon-star"></i></span>
+                    <h3>Confiança</h3>
+                  </div>
+                </div>
+                <div class="col-md-3 animate-box" data-animate-effect="fadeInBottom">
+                  <div class="services color-4">
+                    <span class="icon2"><i class="icon-puzzle-outline"></i></span>
+                    <h3>Parceria</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 animate-box" data-animate-effect="fadeInLeft">
+              <div class="hire">
+                <h2 style="margin: 0 auto">Transformamos complexidade em clareza — projetos precisos, ágeis e confiáveis.</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════
+           SERVIÇOS
+      ═══════════════════════════════════════ -->
+      <section class="colorlib-services" data-section="servicos">
+        <div class="colorlib-narrow-content">
+          <div class="row">
+            <div class="col-md-6 col-md-offset-3 col-md-pull-3 animate-box" data-animate-effect="fadeInLeft">
+              <span class="heading-meta">O que fazemos</span>
+              <h2 class="colorlib-heading">Nossos Serviços</h2>
+            </div>
+          </div>
+          <div class="row row-pt-md">
+            <div class="col-md-4 text-center animate-box">
+              <div class="services color-1">
+                <span class="icon">
+                  <i class="icon-layers2"></i>
+                </span>
+                <div class="desc">
+                  <h3>As Built</h3>
+                  <p>Documentamos a obra exatamente como foi construída, registrando todas as alterações feitas durante a execução — com organização, clareza e rigor técnico.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 text-center animate-box">
+              <div class="services color-2">
+                <span class="icon">
+                  <i class="icon-puzzle-outline"></i>
+                </span>
+                <div class="desc">
+                  <h3>Compatibilização</h3>
+                  <p>Cruzamos informações entre os diferentes projetos da obra para antecipar problemas, eliminar interferências e evitar retrabalho em todas as disciplinas.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 text-center animate-box">
+              <div class="services color-3">
+                <span class="icon">
+                  <i class="icon-note"></i>
+                </span>
+                <div class="desc">
+                  <h3>Plantas de Contrato</h3>
+                  <p>Desenvolvemos plantas de contrato conforme os projetos legais, com foco em clareza, conformidade técnica e atendimento às expectativas da construtora.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════
+           CONTADORES
+      ═══════════════════════════════════════ -->
+      <div id="colorlib-counter" class="colorlib-counters" style="background-image: url({{ url_for('static', filename='images/cover_bg_1.jpg') }})" data-stellar-background-ratio="0.5">
+        <div class="overlay"></div>
+        <div class="colorlib-narrow-content">
+          <div class="row">
+            <div class="col-md-3 text-center animate-box">
+              <span class="colorlib-counter js-counter" data-from="0" data-to="200" data-speed="2500" data-refresh-interval="50"></span>
+              <span class="colorlib-counter-label">Projetos Entregues</span>
+            </div>
+            <div class="col-md-3 text-center animate-box">
+              <span class="colorlib-counter js-counter" data-from="0" data-to="60" data-speed="2500" data-refresh-interval="50"></span>
+              <span class="colorlib-counter-label">Clientes Atendidos</span>
+            </div>
+            <div class="col-md-3 text-center animate-box">
+              <span class="colorlib-counter js-counter" data-from="0" data-to="5" data-speed="2500" data-refresh-interval="50"></span>
+              <span class="colorlib-counter-label">Anos de Experiência</span>
+            </div>
+            <div class="col-md-3 text-center animate-box">
+              <span class="colorlib-counter js-counter" data-from="0" data-to="3" data-speed="2500" data-refresh-interval="50"></span>
+              <span class="colorlib-counter-label">Especialidades</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════
+           POR QUE NOS ESCOLHER
+      ═══════════════════════════════════════ -->
+      <section class="colorlib-skills" data-section="porquenos">
+        <div class="colorlib-narrow-content">
+          <div class="row">
+            <div class="col-md-6 col-md-offset-3 col-md-pull-3 animate-box" data-animate-effect="fadeInLeft">
+              <span class="heading-meta">Nosso Diferencial</span>
+              <h2 class="colorlib-heading animate-box">Por que Escolher a Peixoto David?</h2>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 animate-box" data-animate-effect="fadeInLeft">
+              <p style="margin-bottom: 30px;">Porque já estivemos no lugar de quem precisa das informações organizadas, dos prazos curtos e dos projetos rodando sem imprevistos. Sabemos, na prática, como um as built bem feito, plantas de contrato objetivas e uma compatibilização eficiente fazem toda a diferença no dia a dia da obra.</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
+              <div class="why-box color-1">
+                <h4><i class="icon-bulb" style="margin-right:8px;"></i> Técnica + Experiência</h4>
+                <p>Unimos sólido conhecimento técnico com experiência prática de obra, garantindo soluções que funcionam de verdade — não apenas no papel.</p>
+              </div>
+            </div>
+            <div class="col-md-6 animate-box" data-animate-effect="fadeInRight">
+              <div class="why-box color-2">
+                <h4><i class="icon-clock3" style="margin-right:8px;"></i> Agilidade nos Prazos</h4>
+                <p>Entendemos a pressão dos cronogramas de obra. Trabalhamos com processos estruturados para cumprir datas sem abrir mão da qualidade.</p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
+              <div class="why-box color-3">
+                <h4><i class="icon-star" style="margin-right:8px;"></i> Qualidade e Controle</h4>
+                <p>Aplicamos checklist interno rigoroso e controle de qualidade em cada entrega, assegurando padronização e conformidade técnica em todos os projetos.</p>
+              </div>
+            </div>
+            <div class="col-md-6 animate-box" data-animate-effect="fadeInRight">
+              <div class="why-box color-1">
+                <h4><i class="icon-puzzle-outline" style="margin-right:8px;"></i> Tecnologia BIM</h4>
+                <p>Analisamos modelos BIM e utilizamos a plataforma BimCollab para gestão eficiente das interferências e compatibilizações entre disciplinas.</p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
+              <div class="why-box color-2">
+                <h4><i class="icon-speech-bubble" style="margin-right:8px;"></i> Comunicação Clara</h4>
+                <p>Relatórios organizados, feedback constante e total transparência em cada etapa do processo — você sempre sabe onde está o seu projeto.</p>
+              </div>
+            </div>
+            <div class="col-md-6 animate-box" data-animate-effect="fadeInRight">
+              <div class="why-box color-3">
+                <h4><i class="icon-heart" style="margin-right:8px;"></i> Foco no seu Resultado</h4>
+                <p>Mais do que entregar arquivos, facilitamos o seu trabalho e garantimos o sucesso do projeto — com compromisso e atenção às particularidades de cada empreendimento.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════
+           COMO TRABALHAMOS (PROCESSO)
+      ═══════════════════════════════════════ -->
+      <section class="colorlib-experience" data-section="processo">
+        <div class="colorlib-narrow-content">
+          <div class="row">
+            <div class="col-md-6 col-md-offset-3 col-md-pull-3 animate-box" data-animate-effect="fadeInLeft">
+              <span class="heading-meta">Metodologia</span>
+              <h2 class="colorlib-heading animate-box">Como Trabalhamos</h2>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="timeline-centered">
+
+                <article class="timeline-entry animate-box" data-animate-effect="fadeInLeft">
+                  <div class="timeline-entry-inner">
+                    <div class="timeline-icon color-1">
+                      <i class="icon-pen2"></i>
+                    </div>
+                    <div class="timeline-label">
+                      <h2><a href="#">Entendimento e Planejamento</a> <span>Etapa 01</span></h2>
+                      <p>Iniciamos com o entendimento completo das necessidades e expectativas do cliente. Coletamos todos os documentos necessários — levantamento de alterações, CTB dos projetistas e acesso aos projetos pela gerenciadora — para garantir uma base sólida de trabalho.</p>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="timeline-entry animate-box" data-animate-effect="fadeInRight">
+                  <div class="timeline-entry-inner">
+                    <div class="timeline-icon color-2">
+                      <i class="icon-pen2"></i>
+                    </div>
+                    <div class="timeline-label">
+                      <h2><a href="#">Análise e Compatibilização</a> <span>Etapa 02</span></h2>
+                      <p>Realizamos análise crítica de todos os projetos, com sobreposição e compatibilização das principais interferências entre as diversas disciplinas (arquitetura, elétrica, hidráulica, estrutura, forma, paisagismo, piscina, etc.). Emitimos relatórios de análise por disciplina a cada fase.</p>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="timeline-entry animate-box" data-animate-effect="fadeInLeft">
+                  <div class="timeline-entry-inner">
+                    <div class="timeline-icon color-3">
+                      <i class="icon-pen2"></i>
+                    </div>
+                    <div class="timeline-label">
+                      <h2><a href="#">Limpeza e Atualização</a> <span>Etapa 03</span></h2>
+                      <p>Aplicamos nosso checklist interno para limpeza e padronização das plantas, retirando informações comprometedoras e ajustando o carimbo. Em seguida, atualizamos os projetos de cada disciplina conforme as informações fornecidas pela construtora, incorporando todas as alterações realizadas em obra.</p>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="timeline-entry animate-box" data-animate-effect="fadeInRight">
+                  <div class="timeline-entry-inner">
+                    <div class="timeline-icon color-4">
+                      <i class="icon-pen2"></i>
+                    </div>
+                    <div class="timeline-label">
+                      <h2><a href="#">Validação e Entrega</a> <span>Etapa 04</span></h2>
+                      <p>Enviamos os projetos revisados em DWG e PDF para considerações da construtora. Após aprovação, cadastramos os arquivos na plataforma acordada. As plantas de contrato são entregues em formato digital, incluindo arquivos compatíveis com softwares CAD, prontos para uso imediato.</p>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="timeline-entry begin animate-box" data-animate-effect="fadeInBottom">
+                  <div class="timeline-entry-inner">
+                    <div class="timeline-icon color-none"></div>
+                  </div>
+                </article>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════
+           TRABALHOS — VIDEO MINI PLAYERS
+      ═══════════════════════════════════════ -->
+      <section class="colorlib-work" data-section="trabalhos">
+        <div class="colorlib-narrow-content">
+          <div class="row">
+            <div class="col-md-6 col-md-offset-3 col-md-pull-3 animate-box" data-animate-effect="fadeInLeft">
+              <span class="heading-meta">Portfólio</span>
+              <h2 class="colorlib-heading animate-box">Trabalhos Realizados</h2>
+            </div>
+          </div>
+          <div class="row">
+
+            <!-- Vídeo 1 -->
+            <div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
+              <div class="video-project-card"
+                   data-video="{{ url_for('static', filename='images/video1.MP4') }}"
+                   data-title="Projeto 01">
+                <div class="video-thumbnail">
+                  <video muted preload="metadata" playsinline
+                         src="{{ url_for('static', filename='images/video1.MP4') }}#t=0.001">
+                  </video>
+                  <div class="video-play-overlay"></div>
+                </div>
+                <div class="video-project-info">
+                  <h3>Projeto 01</h3>
+                  <span class="video-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut labore et dolore magna aliqua, com foco em compatibilização de projetos e registro de obra.</span>
+                  <span class="video-date">Janeiro 2024</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Vídeo 2 -->
+            <div class="col-md-6 animate-box" data-animate-effect="fadeInRight">
+              <div class="video-project-card"
+                   data-video="{{ url_for('static', filename='images/video2.MOV') }}"
+                   data-title="Projeto 02">
+                <div class="video-thumbnail">
+                  <video muted preload="metadata" playsinline
+                         src="{{ url_for('static', filename='images/video2.MOV') }}#t=0.001">
+                  </video>
+                  <div class="video-play-overlay"></div>
+                </div>
+                <div class="video-project-info">
+                  <h3>Projeto 02</h3>
+                  <span class="video-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Registro detalhado das alterações realizadas durante a execução da obra com atualização de todas as disciplinas.</span>
+                  <span class="video-date">Março 2024</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Vídeo 3 -->
+            <div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
+              <div class="video-project-card"
+                   data-video="{{ url_for('static', filename='images/video3.MOV') }}"
+                   data-title="Projeto 03">
+                <div class="video-thumbnail">
+                  <video muted preload="metadata" playsinline
+                         src="{{ url_for('static', filename='images/video3.MOV') }}#t=0.001">
+                  </video>
+                  <div class="video-play-overlay"></div>
+                </div>
+                <div class="video-project-info">
+                  <h3>Projeto 03</h3>
+                  <span class="video-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Plantas de contrato desenvolvidas conforme projeto legal, garantindo clareza e conformidade para entrega ao cliente final.</span>
+                  <span class="video-date">Junho 2024</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Vídeo 4 -->
+            <div class="col-md-6 animate-box" data-animate-effect="fadeInRight">
+              <div class="video-project-card"
+                   data-video="{{ url_for('static', filename='images/video4.MOV') }}"
+                   data-title="Projeto 04">
+                <div class="video-thumbnail">
+                  <video muted preload="metadata" playsinline
+                         src="{{ url_for('static', filename='images/video4.MOV') }}#t=0.001">
+                  </video>
+                  <div class="video-play-overlay"></div>
+                </div>
+                <div class="video-project-info">
+                  <h3>Projeto 04</h3>
+                  <span class="video-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Compatibilização entre projetos de arquitetura, estrutura, hidráulica e elétrica com emissão de relatório por disciplina.</span>
+                  <span class="video-date">Agosto 2024</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Vídeo 5 -->
+            <div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
+              <div class="video-project-card"
+                   data-video="{{ url_for('static', filename='images/video5.MOV') }}"
+                   data-title="Projeto 05">
+                <div class="video-thumbnail">
+                  <video muted preload="metadata" playsinline
+                         src="{{ url_for('static', filename='images/video5.MOV') }}#t=0.001">
+                  </video>
+                  <div class="video-play-overlay"></div>
+                </div>
+                <div class="video-project-info">
+                  <h3>Projeto 05</h3>
+                  <span class="video-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Levantamento as built completo com atualização de projetos por disciplina e entrega em DWG e PDF para validação da construtora.</span>
+                  <span class="video-date">Outubro 2024</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Vídeo 6 -->
+            <div class="col-md-6 animate-box" data-animate-effect="fadeInRight">
+              <div class="video-project-card"
+                   data-video="{{ url_for('static', filename='images/video6.MOV') }}"
+                   data-title="Projeto 06">
+                <div class="video-thumbnail">
+                  <video muted preload="metadata" playsinline
+                         src="{{ url_for('static', filename='images/video6.MOV') }}#t=0.001">
+                  </video>
+                  <div class="video-play-overlay"></div>
+                </div>
+                <div class="video-project-info">
+                  <h3>Projeto 06</h3>
+                  <span class="video-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Análise de material de vendas versus projeto legal e projeto executivo, garantindo conformidade e alinhamento entre documentação e obra.</span>
+                  <span class="video-date">Dezembro 2024</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════
+           CONTATO
+      ═══════════════════════════════════════ -->
+      <section class="colorlib-contact" data-section="contato">
+        <div class="colorlib-narrow-content">
+          <div class="row">
+            <div class="col-md-6 col-md-offset-3 col-md-pull-3 animate-box" data-animate-effect="fadeInLeft">
+              <span class="heading-meta">Fale Conosco</span>
+              <h2 class="colorlib-heading">Contato</h2>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-10">
+
+              <div class="colorlib-feature colorlib-feature-sm animate-box" data-animate-effect="fadeInLeft">
+                <div class="colorlib-icon">
+                  <i class="icon-globe-outline"></i>
+                </div>
+                <div class="colorlib-text">
+                  <p><a href="mailto:peixotodavid.arq@gmail.com">peixotodavid.arq@gmail.com</a></p>
+                </div>
+              </div>
+
+              <div class="colorlib-feature colorlib-feature-sm animate-box" data-animate-effect="fadeInLeft">
+                <div class="colorlib-icon">
+                  <i class="icon-map"></i>
+                </div>
+                <div class="colorlib-text">
+                  <p>Rua Vergueiro, 6032 — Ipiranga, São Paulo — SP</p>
+                </div>
+              </div>
+
+              <div class="colorlib-feature colorlib-feature-sm animate-box" data-animate-effect="fadeInLeft">
+                <div class="colorlib-icon">
+                  <i class="icon-phone"></i>
+                </div>
+                <div class="colorlib-text">
+                  <p>
+                    <strong>Ananda Peixoto:</strong> <a href="tel:+5511996699892">(11) 99669-9892</a><br>
+                    <strong>Caroline David:</strong> <a href="tel:+5511995576565">(11) 99557-6565</a>
+                  </p>
+                </div>
+              </div>
+
+              <div class="colorlib-feature colorlib-feature-sm animate-box" data-animate-effect="fadeInLeft">
+                <div class="colorlib-icon">
+                  <i class="icon-instagram"></i>
+                </div>
+                <div class="colorlib-text">
+                  <p><a href="https://instagram.com/peixotodavid.arq" target="_blank">@peixotodavid.arq</a></p>
+                </div>
+              </div>
+
+              <br>
+              <div class="colorlib-feature colorlib-feature-sm animate-box">
+                <a style="float: right;" target="_blank"
+                   href="https://web.whatsapp.com/send?phone=5511996699892&text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20os%20serviços%20da%20Peixoto%20David%20Arquitetura."
+                   class="btn btn-primary btn-send-message">Enviar Mensagem</a>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- end:colorlib-main -->
+  </div><!-- end:container-wrap -->
+</div><!-- end:colorlib-page -->
+
+<!-- ═══════════════════════════════════════
+     MODAL DE VÍDEO (custom, sem Bootstrap modal plugin)
+═══════════════════════════════════════ -->
+<div id="videoModal" role="dialog" aria-modal="true">
+  <div class="vm-box">
+    <div class="vm-header">
+      <h4 id="videoModalTitle">Projeto</h4>
+      <button class="vm-close" id="vmClose" aria-label="Fechar">&times;</button>
+    </div>
+    <video id="modalVideo" controls>
+      Seu navegador não suporta a reprodução deste vídeo.
+    </video>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.easing.1.3.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.waypoints.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.flexslider-min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/owl.carousel.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.countTo.js') }}"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+<script>
+  /* ═══════════════════════════════════════════════════════
+     VIDEO MODAL + CARDS — 100% DOM nativo, sem jQuery
+     Usa fase de CAPTURA para interceptar cliques antes
+     de qualquer outro handler da página.
+  ═══════════════════════════════════════════════════════ */
+
+  var modalEl  = document.getElementById('videoModal');
+  var modalVid = document.getElementById('modalVideo');
+  var modalTtl = document.getElementById('videoModalTitle');
+  var modalBtn = document.getElementById('vmClose');
+
+  /* ── Abrir modal ── */
+  function openVideoModal(src, title) {
+    modalTtl.textContent = title || 'Projeto';
+    modalVid.src = src;
+    modalVid.load();
+    modalEl.classList.add('vm-active');
+    document.body.style.overflow = 'hidden';
+    modalVid.play().catch(function () {});
+  }
+
+  /* ── Fechar modal ── */
+  function closeVideoModal() {
+    modalVid.pause();
+    modalVid.src = '';
+    modalEl.classList.remove('vm-active');
+    document.body.style.overflow = '';
+  }
+
+  /* Fechar: botão X */
+  modalBtn.addEventListener('click', closeVideoModal);
+
+  /* Fechar: clique no backdrop */
+  modalEl.addEventListener('click', function (e) {
+    if (e.target === modalEl) closeVideoModal();
+  });
+
+  /* Fechar: tecla ESC */
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeVideoModal();
+  });
+
+  /* ── Clique no card — fase de CAPTURA (true) ──
+     Intercepta o evento antes de qualquer handler filho
+     ou do jQuery, garantindo que sempre dispare.        */
+  document.addEventListener('click', function (e) {
+    var card = e.target.closest('.video-project-card');
+    if (!card) return;
+    openVideoModal(
+      card.getAttribute('data-video'),
+      card.getAttribute('data-title')
+    );
+  }, true);
+
+  /* ── Hover: inicia/para o mini player ── */
+  document.addEventListener('mouseover', function (e) {
+    var card = e.target.closest('.video-project-card');
+    if (!card) return;
+    var vid = card.querySelector('video');
+    if (!vid) return;
+    vid.currentTime = 0;
+    vid.play().catch(function () {});
+  });
+
+  document.addEventListener('mouseout', function (e) {
+    var card = e.target.closest('.video-project-card');
+    if (!card || card.contains(e.relatedTarget)) return;
+    var vid = card.querySelector('video');
+    if (!vid) return;
+    vid.pause();
+    vid.currentTime = 0;
+  });
+</script>
+
+</body>
+</html>
