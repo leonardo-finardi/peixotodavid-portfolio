@@ -1,1 +1,34 @@
-\env
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Ambientes virtuais
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Distribuição / build
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# IDEs
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Logs
+*.log
