@@ -1,34 +1,68 @@
-# Personal Portfolio - Flask Web Application
+# Peixoto David Arquitetura — Site Institucional
 
-This is a personal portfolio web application created using Flask and inspired by a template from Colorlib. The website showcases my main projects, skills, specialties, and professional journey.
+Site institucional de página única da **Peixoto David Arquitetura**, escritório
+especializado em **As Built**, **Plantas de Contrato**, **Manual do Proprietário**
+e **Compatibilização de Projetos** para construtoras e incorporadoras.
 
-# Features
+Aplicação **Flask** que serve uma landing page estática (HTML + CSS + JS puro),
+sem etapa de build de front-end.
 
-Clean and professional design
-Easy navigation
-Responsive layout
-Sections for projects, skills, specialties, and journey
-Converted to a Flask web application
-Easily customizable
+## Stack
 
-# Installation
+- **Backend:** Flask (Python)
+- **Servidor de produção:** Gunicorn (via `Procfile`)
+- **Front-end:** HTML (Jinja2) + CSS puro + JavaScript vanilla
+- **Fontes:** Cormorant Garamond + Inter (Google Fonts)
 
-To install this project, simply clone the repository with:
+## Estrutura
 
-git clone https://github.com/leonardo-finardi/personal-portfolio.git
+```
+app.py                  # entrypoint usado pelo gunicorn (app:app)
+flask_app.py            # entrypoint de desenvolvimento (debug)
+Procfile                # web: gunicorn app:app
+requirements.txt        # dependências Python
+templates/
+  index.html            # página única (Hero, Quem Somos, Serviços,
+                        #   Diferenciais, Parcerias, Contato, Footer)
+static/
+  css/brand.css         # estilos do site
+  js/brand.js           # animações de scroll, contadores, parallax,
+                        #   menu mobile, vídeos e formulário
+  images/               # imagens e vídeos do site
+```
 
-After cloning the repository, navigate to the project directory and install the required packages:
+## Como rodar localmente
 
-cd <repository>
+Instale as dependências:
 
+```
 pip install -r requirements.txt
+```
 
-# Usage
+Modo desenvolvimento (auto-reload):
 
-To use this project, run the following command:
+```
+python flask_app.py
+```
 
+Ou simulando produção:
+
+```
 python app.py
+```
 
-Then, navigate to http://localhost:5000 in your web browser to view the website.
+Acesse http://localhost:5000.
 
-You can also customize the website by editing the HTML and CSS files in the templates and static folders to fit your own personal brand and style.
+## Deploy
+
+O deploy permanece idêntico ao anterior: o `Procfile` sobe a aplicação com
+`gunicorn app:app`. Nenhuma etapa de build adicional é necessária.
+
+## Notas sobre conteúdo
+
+- As imagens dos sócios e os logos das empresas parceiras usam placeholders
+  (iniciais e wordmarks). Basta substituir pelos arquivos definitivos em
+  `static/images/` e atualizar as referências em `templates/index.html`.
+- A seção "Nosso trabalho" reaproveita os vídeos em `static/images/`
+  (autoplay, mudo, em loop, com filtro preto e branco).
+- O formulário de contato encaminha a mensagem via WhatsApp.
