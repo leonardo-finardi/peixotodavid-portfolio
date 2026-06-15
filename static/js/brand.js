@@ -137,17 +137,18 @@
       if (!form.reportValidity()) return;
 
       var data = new FormData(form);
-      var lines = [
-        "Olá! Gostaria de solicitar uma proposta.",
-        "",
+      var body = [
         "Nome: " + (data.get("nome") || ""),
         "Empresa: " + (data.get("empresa") || "—"),
         "E-mail: " + (data.get("email") || ""),
         "Telefone: " + (data.get("telefone") || "—"),
-        "Mensagem: " + (data.get("mensagem") || "—")
-      ];
-      var url = "https://wa.me/5511996699892?text=" + encodeURIComponent(lines.join("\n"));
-      window.open(url, "_blank", "noopener");
+        "",
+        "Mensagem:",
+        (data.get("mensagem") || "—")
+      ].join("\n");
+      var subject = "Solicitação de proposta — " + (data.get("nome") || "Site Peixoto David");
+      var url = "mailto:peixotodavid.arq@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+      window.location.href = url;
 
       form.hidden = true;
       if (success) success.hidden = false;

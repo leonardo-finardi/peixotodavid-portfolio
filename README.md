@@ -60,9 +60,10 @@ O deploy permanece idêntico ao anterior: o `Procfile` sobe a aplicação com
 
 ## Notas sobre conteúdo
 
-- As imagens dos sócios e os logos das empresas parceiras usam placeholders
-  (iniciais e wordmarks). Basta substituir pelos arquivos definitivos em
-  `static/images/` e atualizar as referências em `templates/index.html`.
+- O logo no topo do hero usa a marca em `static/images/logo-pd-blue-mark.png`
+  renderizada em branco via filtro CSS, integrada à barra de navegação.
 - A seção "Nosso trabalho" reaproveita os vídeos em `static/images/`
   (autoplay, mudo, em loop, com filtro preto e branco).
-- O formulário de contato encaminha a mensagem via WhatsApp.
+- O formulário de contato abre o cliente de e-mail do usuário (mailto) com a
+  mensagem pré-preenchida endereçada a `peixotodavid.arq@gmail.com`.
+- Itens da lista de especialidades no hero direcionam para a seção "Serviços".

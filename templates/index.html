@@ -24,33 +24,51 @@
 
 <body>
 
+{# ── Ícones (lucide-style) das especialidades — usados no Hero e em Serviços ── #}
+{% macro spec_icon(name) %}
+{%- if name == 'asbuilt' -%}
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/></svg>
+{%- elif name == 'plantas' -%}
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
+{%- elif name == 'manual' -%}
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+{%- elif name == 'compat' -%}
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg>
+{%- endif -%}
+{% endmacro %}
+
+{% set especialidades = [
+  ('01', 'As Built', 'asbuilt', 'Documentamos a obra exatamente como foi construída, registrando todas as alterações feitas durante a execução.'),
+  ('02', 'Plantas de Contrato', 'plantas', 'Desenvolvemos plantas de contrato conforme os projetos legais, com foco em clareza e conformidade.'),
+  ('03', 'Manual do Proprietário', 'manual', 'Elaboramos Manuais do Proprietário com base nos projetos fornecidos pela construtora, reunindo informações técnicas do empreendimento de forma clara e organizada.'),
+  ('04', 'Compatibilização de Projetos', 'compat', 'Cruzamos informações entre os diferentes projetos da obra para antecipar problemas, eliminar interferências e evitar retrabalho.')
+] %}
+
 <div class="page">
 
   <!-- ═══════════════════════════ HERO ═══════════════════════════ -->
   <section id="home" class="hero">
     <div class="hero-frame">
       <div class="hero-bg" data-parallax>
-        <img src="{{ url_for('static', filename='images/hero-architecture.jpg') }}" alt="Empreendimento residencial contemporâneo" width="1920" height="1080">
+        <img src="{{ url_for('static', filename='images/hero.png') }}" alt="Empreendimento residencial contemporâneo" width="1920" height="1080">
         <div class="hero-bg-overlay"></div>
+        <div class="hero-bg-topfade"></div>
       </div>
 
-      <!-- Top bar -->
+      <!-- Top bar — logo branco integrado à barra de navegação -->
       <header class="hero-top">
-        <div class="brand-lockup">
-          <img src="{{ url_for('static', filename='images/logo-pd-blue-mark.png') }}" alt="PD" class="brand-mark">
-          <span class="brand-words">
-            <span>Peixoto</span><span class="brand-dot"></span><span>David</span>
-          </span>
+        <div class="nav-pill">
+          <img src="{{ url_for('static', filename='images/logo-pd-blue-mark.png') }}" alt="Peixoto David" class="nav-logo">
+          <span class="nav-sep"></span>
+          <nav class="nav-links" aria-label="Navegação principal">
+            <button type="button" data-go="home">Home</button>
+            <button type="button" data-go="quem-somos">Quem Somos</button>
+            <button type="button" data-go="servicos">Serviços</button>
+            <button type="button" data-go="diferenciais">Diferenciais</button>
+            <button type="button" data-go="parcerias">Parcerias</button>
+            <button type="button" data-go="contato">Contato</button>
+          </nav>
         </div>
-
-        <nav class="nav-pill" aria-label="Navegação principal">
-          <button type="button" data-go="home">Home</button>
-          <button type="button" data-go="quem-somos">Quem Somos</button>
-          <button type="button" data-go="servicos">Serviços</button>
-          <button type="button" data-go="diferenciais">Diferenciais</button>
-          <button type="button" data-go="parcerias">Parcerias</button>
-          <button type="button" data-go="contato">Contato</button>
-        </nav>
 
         <div class="hero-tagline">Arquitetura técnica<br>para construtoras</div>
 
@@ -68,32 +86,24 @@
         <button type="button" data-go="contato">Contato</button>
       </nav>
 
-      <!-- Stats card -->
-      <div class="hero-stats" data-reveal="right">
-        <div class="hero-stat">
-          <div class="hero-stat-num">15</div>
-          <div class="hero-stat-label">Anos de Experiência</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-stat-num">120<span class="plus">+</span></div>
-          <div class="hero-stat-label">Projetos Entregues</div>
-        </div>
+      <!-- Especialidades (substitui o card de estatísticas) — clicáveis → Serviços -->
+      <div class="hero-specs" data-reveal="right">
+        {% for n, title, icon, desc in especialidades %}
+        <button type="button" class="hero-spec" data-go="servicos">
+          <span class="hero-spec-icon">{{ spec_icon(icon) }}</span>
+          <span class="hero-spec-label">{{ title }}</span>
+        </button>
+        {% endfor %}
       </div>
 
       <!-- Wordmark -->
       <div class="hero-wordmark" data-reveal="up">
         <span class="hero-kicker">— soluções técnicas</span>
-        <h1>
-          <span class="hero-name">
-            <span>Peixoto</span>
-            <span class="hero-name-dot"></span>
-            <span>David</span>
-          </span>
-          <span class="hero-sub">Arquitetura</span>
+        <h1 class="hero-name">
+          <span>peixoto</span>
+          <span class="italic">david</span>
         </h1>
       </div>
-
-      <img src="{{ url_for('static', filename='images/logo-pd-blue-mark.png') }}" alt="" aria-hidden="true" class="hero-watermark">
     </div>
 
     <!-- Floating CTA -->
@@ -116,23 +126,29 @@
 
     <div class="qs-lead" data-reveal="up" data-delay="120">
       <p>
-        A Peixoto David Arquitetura transforma complexidade em clareza. Somos um escritório
-        especializado em projetos As Built, Plantas de Contrato, Manuais do Proprietário e
-        Compatibilização de Projetos para construtoras e incorporadoras que buscam precisão,
-        <span class="chip">agilidade</span> e confiança.
+        A Peixoto David Arquitetura <span class="chip">transforma</span> complexidade em
+        <span class="chip">clareza</span>. Somos um escritório especializado em As Built,
+        Plantas de Contrato, Manuais do Proprietário e Compatibilização de Projetos para
+        construtoras e incorporadoras que buscam <span class="chip">precisão</span>,
+        <span class="chip">agilidade</span> e <span class="chip">confiança</span>.
       </p>
     </div>
 
-    <div class="qs-body" data-reveal="up" data-delay="200">
-      <p>Com uma equipe experiente e apaixonada por detalhes, traduzimos o que está na obra em projetos organizados, compreensíveis e tecnicamente impecáveis.</p>
-      <p>Utilizamos metodologias consolidadas, tecnologia de ponta e um rigoroso controle de qualidade, sempre com olhar atento às particularidades de cada cliente e empreendimento.</p>
-      <p class="qs-emph">Cada projeto é mais do que técnica: é parceria, estratégia e construção inteligente.</p>
+    <div class="qs-media">
+      <div class="qs-photos" data-reveal="up" data-delay="120">
+        <img src="{{ url_for('static', filename='images/quem-somos.png') }}" alt="Projetos e empreendimentos Peixoto David" loading="lazy">
+      </div>
+      <div class="qs-body" data-reveal="up" data-delay="200">
+        <p>Com uma equipe experiente e apaixonada por detalhes, traduzimos o que está na obra em projetos organizados, compreensíveis e tecnicamente impecáveis.</p>
+        <p>Utilizamos metodologias consolidadas, tecnologia de ponta e um rigoroso controle de qualidade, sempre com olhar atento às particularidades de cada cliente e empreendimento.</p>
+        <p class="qs-emph">Cada projeto é mais do que técnica: é parceria, estratégia e construção inteligente.</p>
+      </div>
     </div>
 
     <div class="stats-strip">
-      <div class="stat-cell" data-reveal="up"><span class="stat-num" data-counter="120" data-suffix="+">0</span><span class="stat-label">Projetos Entregues</span></div>
-      <div class="stat-cell" data-reveal="up" data-delay="80"><span class="stat-num" data-counter="40" data-suffix="+">0</span><span class="stat-label">Clientes Atendidos</span></div>
-      <div class="stat-cell" data-reveal="up" data-delay="160"><span class="stat-num" data-counter="15" data-suffix="">0</span><span class="stat-label">Anos de Experiência</span></div>
+      <div class="stat-cell" data-reveal="up"><span class="stat-num" data-counter="50" data-suffix="+">0</span><span class="stat-label">Projetos Entregues</span></div>
+      <div class="stat-cell" data-reveal="up" data-delay="80"><span class="stat-num" data-counter="20" data-suffix="+">0</span><span class="stat-label">Clientes Atendidos</span></div>
+      <div class="stat-cell" data-reveal="up" data-delay="160"><span class="stat-num" data-counter="6" data-suffix="">0</span><span class="stat-label">Anos de Experiência</span></div>
       <div class="stat-cell" data-reveal="up" data-delay="240"><span class="stat-num" data-counter="4" data-suffix="">0</span><span class="stat-label">Especialidades</span></div>
     </div>
   </section>
@@ -147,55 +163,22 @@
 
       <div class="servicos-grid">
         <div class="servicos-list">
-          <div class="service-row" data-reveal="up">
-            <span class="service-n">01</span>
+          {% for n, title, icon, desc in especialidades %}
+          <div class="service-row" data-reveal="up" data-delay="{{ loop.index0 * 80 }}">
+            <span class="service-icon">{{ spec_icon(icon) }}</span>
             <div class="service-main">
               <div class="service-title-row">
-                <h3>As Built</h3>
+                <h3>{{ title }}</h3>
                 <span class="service-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 19L19 5M19 5H8M19 5V16" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
               </div>
-              <p>Documentamos a obra exatamente como foi construída, registrando todas as alterações realizadas durante a execução.</p>
+              <p>{{ desc }}</p>
             </div>
           </div>
-          <div class="service-row" data-reveal="up" data-delay="80">
-            <span class="service-n">02</span>
-            <div class="service-main">
-              <div class="service-title-row">
-                <h3>Plantas de Contrato</h3>
-                <span class="service-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 19L19 5M19 5H8M19 5V16" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-              </div>
-              <p>Plantas conforme os projetos legais, com foco em clareza, padronização e conformidade documental.</p>
-            </div>
-          </div>
-          <div class="service-row" data-reveal="up" data-delay="160">
-            <span class="service-n">03</span>
-            <div class="service-main">
-              <div class="service-title-row">
-                <h3>Manual do Proprietário</h3>
-                <span class="service-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 19L19 5M19 5H8M19 5V16" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-              </div>
-              <p>Manuais completos e organizados, com informações técnicas, orientações de uso, manutenção e garantia.</p>
-            </div>
-          </div>
-          <div class="service-row" data-reveal="up" data-delay="240">
-            <span class="service-n">04</span>
-            <div class="service-main">
-              <div class="service-title-row">
-                <h3>Compatibilização de Projetos</h3>
-                <span class="service-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 19L19 5M19 5H8M19 5V16" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-              </div>
-              <p>Compatibilização entre disciplinas, identificando interferências e propondo soluções antes da execução.</p>
-            </div>
-          </div>
+          {% endfor %}
         </div>
 
         <div class="servicos-feature" data-reveal="up" data-delay="120">
-          <img src="{{ url_for('static', filename='images/services-building.jpg') }}" alt="Empreendimento residencial contemporâneo" loading="lazy">
-          <div class="servicos-feature-overlay"></div>
-          <div class="servicos-feature-caption">
-            <span class="kicker light">— empreendimentos</span>
-            <p>Precisão técnica para projetos de alto padrão.</p>
-          </div>
+          <img src="{{ url_for('static', filename='images/services.png') }}" alt="Empreendimento residencial contemporâneo" loading="lazy">
         </div>
       </div>
     </div>
@@ -223,7 +206,7 @@
         </div>
         <div class="dif-card" data-reveal="up" data-delay="100">
           <span class="kicker">— 02 técnica</span>
-          <p>Um as built bem feito, plantas de contrato objetivas e compatibilização eficiente fazem toda a diferença no dia a dia da obra.</p>
+          <p>Sabemos, na prática, como um As Built bem executado, plantas de contrato objetivas, manuais do proprietário bem estruturados e uma compatibilização eficiente contribuem para a organização, a qualidade e o sucesso de cada empreendimento.</p>
         </div>
         <div class="dif-card dif-card-dark" data-reveal="up" data-delay="200">
           <span class="kicker soft">— 03 compromisso</span>
@@ -237,20 +220,27 @@
   <section id="parcerias" class="section-band parcerias">
     <div class="section parcerias-inner">
       <div class="band-head">
-        <h2 class="display-md uppercase" data-reveal="up">Empresas <em>Parceiras</em></h2>
+        <h2 class="display-lg" data-reveal="up">empresas <em>parceiras</em></h2>
         <span class="kicker" data-reveal="up" data-delay="100">— construímos juntos</span>
       </div>
 
+      {% set partners = [
+        ('partner-porte.png', 'Porte'),
+        ('partner-mpd.png', 'MPD'),
+        ('partner-cyrela.png', 'Cyrela'),
+        ('partner-facilitat.png', 'Facilitat'),
+        ('partner-tatiana.png', 'Tatiana Braga'),
+        ('partner-vivaz.png', 'Vivaz')
+      ] %}
       <div class="partner-grid">
-        <div class="partner-cell" data-reveal="up"><span class="partner-name">Porte</span></div>
-        <div class="partner-cell" data-reveal="up" data-delay="50"><span class="partner-name">MPD</span></div>
-        <div class="partner-cell" data-reveal="up" data-delay="100"><span class="partner-name">Cyrela</span></div>
-        <div class="partner-cell" data-reveal="up" data-delay="150"><span class="partner-name">Facilitat</span></div>
-        <div class="partner-cell" data-reveal="up" data-delay="200"><span class="partner-name">Tatiana Braga</span></div>
-        <div class="partner-cell" data-reveal="up" data-delay="250"><span class="partner-name">Vivaz</span></div>
+        {% for file, name in partners %}
+        <div class="partner-cell" data-reveal="up" data-delay="{{ loop.index0 * 50 }}">
+          <img src="{{ url_for('static', filename='images/' + file) }}" alt="{{ name }}" title="{{ name }}" loading="lazy">
+        </div>
+        {% endfor %}
       </div>
 
-      <!-- Videos -->
+      <!-- Trabalho -->
       <div class="work">
         <div class="band-head work-head">
           <h3 class="display-sm" data-reveal="up">nosso <em>trabalho</em></h3>
@@ -258,18 +248,10 @@
         </div>
 
         <div class="work-grid">
-          {% set videos = [
-            ['images/video1.MP4', 'Vídeo 01'],
-            ['images/video2.MOV', 'Vídeo 02'],
-            ['images/video3.MOV', 'Vídeo 03'],
-            ['images/video4.MOV', 'Vídeo 04'],
-            ['images/video5.MOV', 'Vídeo 05'],
-            ['images/video6.MOV', 'Vídeo 06']
-          ] %}
-          {% for vid, label in videos %}
+          {% set videos = ['images/video1.MP4','images/video2.MOV','images/video3.MOV','images/video4.MOV','images/video5.MOV','images/video6.MOV'] %}
+          {% for vid in videos %}
           <div class="work-cell" data-reveal="up" data-delay="{{ loop.index0 * 50 }}">
             <video class="work-video" muted loop playsinline preload="none" data-src="{{ url_for('static', filename=vid) }}"></video>
-            <div class="work-cell-label">{{ label }}</div>
           </div>
           {% endfor %}
         </div>
@@ -281,22 +263,25 @@
   <section id="contato" class="section contato">
     <h2 class="display-xl contato-title" data-reveal="up">vamos <em>conversar?</em></h2>
 
-    <!-- Founders -->
+    <!-- Sócias -->
     <div class="founders" data-reveal="up">
       <div class="founders-lead">
-        <span class="kicker">— quem lidera</span>
-        <p>Duas sócias, um propósito: precisão técnica com proximidade humana.</p>
+        <img src="{{ url_for('static', filename='images/logo-pd-full.png') }}" alt="Peixoto David Arquitetura" class="founders-logo">
       </div>
       <div class="founders-people">
         <div class="founder">
-          <div class="founder-avatar founder-avatar-1">AP</div>
+          <div class="founder-avatar">
+            <img src="{{ url_for('static', filename='images/ananda.jpg') }}" alt="Ananda Peixoto" loading="lazy">
+          </div>
           <div class="founder-meta">
             <div class="founder-role">Sócia-fundadora</div>
             <div class="founder-name">Ananda Peixoto</div>
           </div>
         </div>
         <div class="founder">
-          <div class="founder-avatar founder-avatar-2">CD</div>
+          <div class="founder-avatar">
+            <img src="{{ url_for('static', filename='images/caroline.jpg') }}" alt="Caroline David" loading="lazy">
+          </div>
           <div class="founder-meta">
             <div class="founder-role">Sócia-fundadora</div>
             <div class="founder-name">Caroline David</div>
@@ -309,21 +294,36 @@
       <div class="contato-info" data-reveal="up">
         <a class="contact-item" target="_blank" rel="noopener"
            href="https://wa.me/5511996699892?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20os%20servi%C3%A7os%20da%20Peixoto%20David%20Arquitetura.">
-          <div class="contact-label">WhatsApp</div>
-          <div class="contact-value">(11) 99669-9892 · (11) 99557-6565</div>
+          <span class="contact-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </span>
+          <span class="contact-text">
+            <span class="contact-label">WhatsApp</span>
+            <span class="contact-value">(11) 99669-9892 · (11) 99557-6565</span>
+          </span>
         </a>
+
         <a class="contact-item" href="mailto:peixotodavid.arq@gmail.com">
-          <div class="contact-label">E-mail</div>
-          <div class="contact-value">peixotodavid.arq@gmail.com</div>
+          <span class="contact-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          </span>
+          <span class="contact-text">
+            <span class="contact-label">E-mail</span>
+            <span class="contact-value">peixotodavid.arq@gmail.com</span>
+          </span>
         </a>
+
         <a class="contact-item" href="https://instagram.com/peixotodavid.arq" target="_blank" rel="noopener">
-          <div class="contact-label">Instagram</div>
-          <div class="contact-value">@peixotodavid.arq</div>
+          <span class="contact-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+          </span>
+          <span class="contact-text">
+            <span class="contact-label">Instagram</span>
+            <span class="contact-value">@peixotodavid.arq</span>
+          </span>
         </a>
-        <div class="contact-item">
-          <div class="contact-label">Endereço</div>
-          <div class="contact-value">Rua Vergueiro, 6032 — Ipiranga, São Paulo — SP</div>
-        </div>
+
+
       </div>
 
       <div class="contato-form-wrap" data-reveal="up" data-delay="120">
