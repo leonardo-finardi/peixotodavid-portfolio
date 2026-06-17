@@ -30,6 +30,7 @@
     burger.classList.remove("open");
     mobileMenu.classList.remove("open");
     burger.setAttribute("aria-expanded", "false");
+    document.body.style.overflow = "";
   }
 
   if (burger && mobileMenu) {
@@ -37,8 +38,13 @@
       var isOpen = mobileMenu.classList.toggle("open");
       burger.classList.toggle("open", isOpen);
       burger.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      document.body.style.overflow = isOpen ? "hidden" : "";
     });
   }
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") closeMobileMenu();
+  });
 
   /* ── Scroll reveal ── */
   var revealEls = document.querySelectorAll("[data-reveal]");
@@ -87,9 +93,10 @@
     counters.forEach(animateCounter);
   }
 
-  /* ── Hero parallax ── */
+  /* ── Hero parallax (desktop only) ── */
   var parallax = document.querySelector("[data-parallax]");
-  if (parallax && !prefersReduced) {
+  var isMobile = window.matchMedia("(max-width: 767px)").matches;
+  if (parallax && !prefersReduced && !isMobile) {
     var hero = parallax.closest(".hero");
     var ticking = false;
     function updateParallax() {

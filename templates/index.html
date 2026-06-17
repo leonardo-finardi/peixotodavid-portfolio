@@ -58,7 +58,9 @@
       <!-- Top bar — logo branco integrado à barra de navegação -->
       <header class="hero-top">
         <div class="nav-pill">
-          <img src="{{ url_for('static', filename='images/logopd.png') }}" alt="Peixoto David" class="nav-logo">
+          <span class="nav-logo-wrap">
+            <img src="{{ url_for('static', filename='images/logopd.png') }}" alt="Peixoto David" class="nav-logo">
+          </span>
           <span class="nav-sep"></span>
           <nav class="nav-links" aria-label="Navegação principal">
             <button type="button" data-go="home">Home</button>
@@ -225,17 +227,19 @@
       </div>
 
       {% set partners = [
-        ('partner-porte.png', 'Porte'),
-        ('partner-mpd.png', 'MPD'),
-        ('partner-cyrela.png', 'Cyrela'),
-        ('partner-facilitat.png', 'Facilitat'),
-        ('partner-tatiana.png', 'Tatiana Braga'),
-        ('partner-vivaz.png', 'Vivaz')
+        ('partner-porte.png', 'Porte', ''),
+        ('partner-mpd.png', 'MPD', 'partner-logo--boost'),
+        ('partner-cyrela.png', 'Cyrela', 'partner-logo--boost'),
+        ('partner-facilitat.png', 'Facilitat', 'partner-logo--boost-lg'),
+        ('partner-tatiana.png', 'Tatiana Braga', 'partner-logo--boost-lg'),
+        ('partner-vivaz.png', 'Vivaz', 'partner-logo--boost')
       ] %}
       <div class="partner-grid">
-        {% for file, name in partners %}
+        {% for file, name, logo_class in partners %}
         <div class="partner-cell" data-reveal="up" data-delay="{{ loop.index0 * 50 }}">
-          <img src="{{ url_for('static', filename='images/' + file) }}" alt="{{ name }}" title="{{ name }}" loading="lazy">
+          <div class="partner-logo-slot">
+            <img src="{{ url_for('static', filename='images/' + file) }}" alt="{{ name }}" title="{{ name }}" class="partner-logo {{ logo_class }}" loading="lazy">
+          </div>
         </div>
         {% endfor %}
       </div>
