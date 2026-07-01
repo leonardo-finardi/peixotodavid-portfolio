@@ -17,6 +17,7 @@ ENV/
 dist/
 build/
 .eggs/
+.firebase/
 
 # IDEs
 .vscode/

@@ -20,6 +20,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/brand.css') }}">
+<script>document.documentElement.classList.add("js");</script>
 </head>
 
 <body>
@@ -232,7 +233,8 @@
         ('partner-cyrela.png', 'Cyrela', 'partner-logo--boost'),
         ('partner-facilitat.png', 'Facilitat', 'partner-logo--boost-lg'),
         ('partner-tatiana.png', 'Tatiana Braga', 'partner-logo--boost-lg'),
-        ('partner-vivaz.png', 'Vivaz', 'partner-logo--boost')
+        ('partner-vivaz.png', 'Vivaz', 'partner-logo--boost'),
+        ('partner-abyta.jpg', 'Abyta', '')
       ] %}
       <div class="partner-grid">
         {% for file, name, logo_class in partners %}
