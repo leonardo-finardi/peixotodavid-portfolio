@@ -16,10 +16,34 @@
 
   document.querySelectorAll("[data-go]").forEach(function (btn) {
     btn.addEventListener("click", function () {
+      var toggleId = btn.getAttribute("data-toggle-service");
+      if (toggleId) toggleService(toggleId, btn);
       go(btn.getAttribute("data-go"));
       closeMobileMenu();
     });
   });
+
+  function toggleService(slug, btn) {
+    var row = document.getElementById("service-" + slug);
+    if (!row) return;
+
+    var isOpening = row.hidden;
+    row.hidden = !isOpening;
+    btn.setAttribute("aria-expanded", isOpening ? "true" : "false");
+    btn.classList.toggle("hero-spec--active", isOpening);
+
+    var kicker = document.getElementById("servicosKicker");
+    if (kicker) kicker.textContent = isOpening ? "— 05 especialidades" : "— 04 especialidades";
+
+    if (isOpening) {
+      row.classList.add("is-visible");
+      if (!prefersReduced) {
+        setTimeout(function () {
+          row.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }, 350);
+      }
+    }
+  }
 
   /* ── Mobile menu ── */
   var burger = document.getElementById("navBurger");

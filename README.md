@@ -110,9 +110,25 @@ sem cold start e com domínio customizado no plano gratuito.
 ### Deploy manual (opcional)
 
 ```
+firebase deploy --only hosting
+```
+
+O `firebase.json` inclui um **predeploy** que roda `python scripts/export_static.py`
+automaticamente antes de cada deploy — não é preciso exportar manualmente.
+
+Se preferir exportar separado:
+
+```
 python scripts/export_static.py
 firebase deploy --only hosting
 ```
+
+**Importante:** o Firebase publica a pasta `dist/`, não o código-fonte. Se você
+alterou `templates/`, `static/` ou `app.py`, precisa gerar um export novo antes
+do deploy (o predeploy faz isso por você).
+
+Após o deploy, se o site parecer igual ao anterior, faça hard refresh
+(`Ctrl+Shift+R`) — CSS/JS em `/static/` ficam em cache longo no CDN.
 
 ### O que acontece no CI
 

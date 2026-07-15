@@ -310,6 +310,7 @@ h1, h2, h3 {
 .hero-spec:last-child { border-bottom: none; }
 .hero-spec:hover { background: rgba(255,255,255,0.12); padding-left: 1.25rem; }
 @media (min-width: 768px) { .hero-spec:hover { padding-left: 1.5rem; } }
+.hero-spec--active { background: rgba(255,255,255,0.16); }
 .hero-spec > * { pointer-events: none; }
 .hero-spec-icon { display: flex; flex-shrink: 0; align-items: center; }
 .hero-spec-icon svg { width: 1.05rem; height: 1.05rem; color: rgba(255,255,255,0.9); }
@@ -389,7 +390,14 @@ h1, h2, h3 {
 .servicos-list { display: flex; flex-direction: column; }
 .service-row { display: flex; align-items: flex-start; gap: 1.5rem; padding: 1.75rem 0; border-top: 1px solid var(--border); transition: padding-left 0.5s ease; }
 @media (min-width: 768px) { .service-row { padding: clamp(1.1rem, 2.2vh, 1.5rem) 0; } }
-.servicos-list .service-row:last-child { border-bottom: 1px solid var(--border); }
+.servicos-list .service-row:nth-child(4) { border-bottom: 1px solid var(--border); }
+.service-row--extra:not([hidden]) { border-bottom: 1px solid var(--border); }
+.service-row--extra[hidden] { display: none; }
+.service-row--extra:not([hidden]) { animation: service-reveal 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
+@keyframes service-reveal {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
 .service-row:hover { padding-left: 0.5rem; }
 .service-icon { color: var(--brand); padding-top: 0.15rem; width: 2rem; flex-shrink: 0; display: flex; }
 .service-icon svg { width: 1.7rem; height: 1.7rem; }
